@@ -8,7 +8,7 @@
 
 using namespace std;
 
-typedef vector <string> vs;
+typedef vector <char> vc;
 
 int main(int argc, char *argv[]){
     if(argc < 2){
@@ -23,6 +23,5 @@ int main(int argc, char *argv[]){
         compile(name);
     }
     
-    getch();
     return 0;
 }

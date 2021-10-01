@@ -1,0 +1,9 @@
+operator + : (a, b){
+    result = cpp (return a + b;);
+    return result;
+}
+
+operator - : (a, b){
+    result = cpp (return a - b;);
+    return result;
+}
