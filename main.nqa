@@ -1,8 +1,9 @@
 ~Hola~
 
-xd ewe uwuu
 ~ comentarios
 multilinea xd ewe
-~ (:)
-cpp return 0;
-xd uwu
+~ 
+
+cpp(int func(int, int b){return a + b;}
+cout << func(2, 3);
+)

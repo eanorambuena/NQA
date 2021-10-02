@@ -1,1 +1,1 @@
-return
+int , int b 

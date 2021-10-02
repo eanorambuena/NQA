@@ -3,6 +3,14 @@
 using namespace std;
 
 void ZoneError(int w){
-    cout << "Zone Error: Wrong number of parenthesis" << endl;
+    cout << "ZoneError: Wrong number of parenthesis" << endl;
     cout << w << endl;
+}
+
+void MissingZoneError(int position){
+    cout << "MissingZoneError: Missing parenthesis in position " << position << endl;
+}
+
+void IncludeError(string file){
+    cout << "IncludeError: Could not include " << file << endl;
 }

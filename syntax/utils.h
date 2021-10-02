@@ -1,10 +1,28 @@
-#include <stack>
+#include <vector>
+
+#include "errors.h"
 
 using namespace std;
 
-void print_zones(stack <pair <int, int>> zones){
+typedef pair <int, int> ii;
+typedef vector <ii> vii;
+
+ii next_zone(int position, vii zones){
+    ii zone = {0, 0};
     for(int i = 0; i < zones.size(); i++){
-        cout << "<" << zones.top().first << ", " << zones.top().second << ">" << endl;
-        zones.pop();
+        zone = zones[i];
+        if(position < zone.first && position < zone.second){
+            break;
+        }
+    }
+    if(zone.first != position + 1){
+        MissingZoneError(position + 1);
+    }
+    return zone;
+}
+
+void print_zones(vii zones){
+    for(int i = 0; i < zones.size(); i++){
+        cout << "<" << zones[i].first << ", " << zones[i].second << ">" << endl;
     }
 }
