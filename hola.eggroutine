@@ -1,0 +1,26 @@
+imp numpy, xd
+com	me gusta la pizza xd
+var my_var int -2
+whi my_var < 2
+    out "Hello World"
+    var my_var int my_var + 1
+end
+def my_func param1 param2
+    var suma str (param1 + param2)
+    ret suma
+end
+iff my_var < 0
+    var my_var int 0
+end
+sto var uwu int 3
+els
+    var nombre str ""
+    inp nombre "say a name: "
+    var h str "Hello "
+    asf my_var my_func h nombre
+    for i [0, 5]
+        out my_var
+    end
+end
+use uwu
+out uwu

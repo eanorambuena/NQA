@@ -22,6 +22,10 @@ int main(int argc, char *argv[]){
         string name = argv[2];
         compile(name);
     }
+    else if(command == "help"){
+        print("Welcome");
+    }
     
     return 0;
 }
+

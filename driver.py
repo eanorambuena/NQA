@@ -1,4 +1,4 @@
-import subprocess, os
+import subprocess, os, nqs
 
 #from eggdriver import cpp
 # cpp.compile("core", "Emma")
@@ -8,4 +8,5 @@ def compile(file):
         os.remove(file + ".exe")
     subprocess.call(["g++", "-std=c++17", file + ".cpp" , "-o", file])
 
-compile("nqa")
+#compile("nqs")
+

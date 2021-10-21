@@ -1,9 +1,11 @@
 ~Hola~
 
-~ comentarios
-multilinea xd ewe
+~ comentarios900ewe
 ~ 
-
-cpp(int func(int, int b){return a + b;}
-cout << func(2, 3);
-)
+j = "23"
+i = "piña"
+cpp[int func(int a, int b){return a + b;}
+cout << func(2.53, 3);
+]
+ewe = 0..9
+_uwu = "xd"

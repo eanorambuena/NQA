@@ -27,11 +27,11 @@ void compile(string name){
 
     for(int i = 0; i < commands.size(); i++){
         string c = commands[i];
-        if(c == "("){
+        if(c == "["){
             waiting += 1;
             zone = {i, 0};
         }
-        else if(c == ")"){
+        else if(c == "]"){
             waiting += -1;
             zone.second = i;
             zones.push_back(zone);
@@ -46,6 +46,7 @@ void compile(string name){
                 text += commands[j] + " "; 
             }
         }
+        
         else if(c == "include"){
             ii zone = next_zone(i, zones);
             string file = "";
