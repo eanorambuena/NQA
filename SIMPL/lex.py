@@ -5,12 +5,13 @@ T, F = True, False
 
 def scanner(text, command = None):
     tokens = []
-    commentary, string, name, number, float =  F, F, F, F, F
+    commentary, string, name, number, float, operator =  F, F, F, F, F, F
     lexema = ""
     line = 1
     errors = 0
 
-    for i in range(len(text)):
+    i = 0
+    while i < len(text):
         ch = text[i]
 
         if ch == "\n":
@@ -44,14 +45,26 @@ def scanner(text, command = None):
                 tokens.append([lexema, INT])
             lexema = ""
             number, float = F, F
-        
+            i -= 1
         elif name and ch in alphanum:
             lexema += ch
         elif name and ch not in alphanum:
             name = F
             tokens.append([lexema, get_token_ID(lexema)])
             lexema = ""
-        
+            i -= 1
+        elif operator and ch in operators:
+            lexema += ch
+        elif operator and ch not in operators:
+            operator = F
+            id = get_token_ID(lexema)
+            if id == identifier:
+                for lex in lexema:
+                    tokens.append([lex, get_token_ID(lex)])
+            else:
+                tokens.append([lexema, id])
+            lexema = ""
+            i -= 1
         elif not commentary and ch in commentaries:
             commentary = True
         elif not string and ch in strings:
@@ -62,8 +75,12 @@ def scanner(text, command = None):
         elif not name and not number and ch in digits:
             number = T
             lexema += ch
+        elif not name and not number and not operator and ch in operators:
+            operator = T
+            lexema += ch
         elif ch not in blanks:
             tokens.append([ch, ch])
+        i += 1
 
     result = tokens + [f"Last line: {line}"]
 

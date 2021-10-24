@@ -9,3 +9,6 @@ from file import  *
 syntaxer(scanner(read_module("main.nqa")))
 
 print("\n", protected_tokens)
+
+       
+                

@@ -1,6 +1,7 @@
 from utils import *
 
-alphabet = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz_"
+mayusc = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+alphabet = mayusc + mayusc.lower() + "_"
 digits = "0123456789"
 alphanum = alphabet + digits
 blanks = "/t /n"
@@ -24,7 +25,7 @@ classes = ["class", "self"]
 
 primitives = [FLOAT, INT, STRING, BOOL, NULL]
 std_funcs = preprocess + conditionals + loops + functions + classes
-operators = tolist("+-*/%=<>()[]{}#$@") + ["//", "==", "<=", ">="]
+operators = tolist("+-*/%=<>()[]{}#$@,") + ["//", "==", "<=", ">="]
 
 protected = primitives + std_funcs + operators
 
