@@ -42,3 +42,10 @@ def get_token_Symbol(lexema):
         if lexema == token[1]:
             return token[0]
     return str(identifier)
+
+def get_names(tokens):
+    names = []
+    for token in tokens:
+        if token[1] == identifier and token[0] not in names:
+            names.append(token[0])
+    return names

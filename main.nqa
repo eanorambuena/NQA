@@ -7,5 +7,5 @@ i = "piña"
 cpp[int func(int a, int b){return a + b;}
 cout << func(2.53, 3);
 ]
-ewe = 0..9
+ewe = 0.9
 _uwu = "xd"

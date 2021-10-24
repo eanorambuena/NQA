@@ -6,9 +6,8 @@ def syntaxer(tokens):
 
 from lex import *
 from file import  *
-syntaxer(scanner(read_module("main.nqa")))
-
-print("\n", protected_tokens)
+tokens = scanner(read_module("main.nqa"), "-v")
+syntaxer(tokens)
 
        
                 

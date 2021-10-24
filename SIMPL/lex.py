@@ -4,6 +4,8 @@ from error import *
 T, F = True, False
 
 def scanner(text, command = None):
+    verbose = command in ["-v", "-verbose"]
+
     tokens = []
     commentary, string, name, number, float, operator =  F, F, F, F, F, F
     lexema = ""
@@ -82,11 +84,16 @@ def scanner(text, command = None):
             tokens.append([ch, ch])
         i += 1
 
-    result = tokens + [f"Last line: {line}"]
-
     if errors > 0:
-        print("Traceback:", result)
-    elif command in ["-v", "-verbose"]:
-        print(result)
+        print("Traceback:", tokens)
+    elif verbose:
+        print(tokens)
+
+    if verbose:
+        print(f"Last line: {line}")
+        print(f"Tokens detected: {len(tokens)}")
+        names = get_names(tokens)
+        string_of_names = tostring(names, ", ")
+        print(f"Names defined ({len(names)}): {string_of_names}")
 
     return tokens

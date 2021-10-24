@@ -9,3 +9,11 @@ def tolist(string):
     for i in string:
         arr.append(i)
     return arr
+
+def tostring(array, separator = ""):
+    s = ""
+    for i in range(len(array)):
+        s += array[i]
+        if i != len(array) - 1:
+            s += separator
+    return s
