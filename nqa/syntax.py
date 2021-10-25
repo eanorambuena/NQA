@@ -2,7 +2,6 @@ import nqa.grammar as gr
 import nqa.lex as lex
 from nqa.error import *
 
-
 def parser(tokens):
     n = len(tokens)
     protected_indexes = list(range(len(gr.protected)))
