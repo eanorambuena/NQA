@@ -1,5 +1,8 @@
-def Error(line, message, type):
-    print(f"{type}Error in line {line}: {message}")
+def Error(line = None, message = "", type = ""):
+    if line != None:
+        print(f"{type}Error in line {line}: {message}")
+    else:
+        print(f"{type}Error: {message}")
     return 1
 
 def LexicalError(line, message):
@@ -7,3 +10,9 @@ def LexicalError(line, message):
 
 def SyntaxError(line, message):
     return Error(line, message, "Syntax")
+
+def ArgumentError(line, message):
+    return Error(line, message, "Argument")
+
+def FileError(line, message):
+    return Error(line, message, "File")

@@ -17,20 +17,20 @@ STRING = "string"
 NULL = "none"
 
 USE = "use"
-INCLUDE, PASS = "import", "pass"
-IF, ELIF, ELSE = "if", "elsif", "else"
-WHILE, FOR, BREAK, CONTINUE = "while", "for", "break", "skip"
-OPERATOR, RETURN = "operator", "return"
+INCLUDE, FROM, AS, PASS = "import", "from", "as", "pass"
+IF, ELIF, ELSE = "if", "elif", "else"
+WHILE, FOR, BREAK, CONTINUE = "while", "for", "break", "continue"
+OPERATOR, RETURN = "def", "return"
 CLASS, SELF = "class", "self"
-AND, OR, NOT = "and", "or", "not"
+AND, OR, NOT, TRUE, FALSE = "and", "or", "not", "True", "False"
 
 preprocess = [USE]
-process = [INCLUDE, PASS]
+process = [INCLUDE, FROM, AS, PASS]
 conditionals = [IF, ELIF, ELSE]
 loops = [WHILE, FOR, BREAK, CONTINUE]
 functions = [OPERATOR, RETURN]
 classes = [CLASS, SELF]
-bools = [AND, OR, NOT]
+bools = [AND, OR, NOT, TRUE, FALSE]
 
 primitives = [FLOAT, INT, STRING, NULL]
 std_funcs = preprocess + conditionals + loops + functions + classes + bools
@@ -39,9 +39,10 @@ operators = tolist(one_char_symbols) + two_char_symbols
 protected = primitives + std_funcs + operators
 
 protected_tokens = tokenize(protected)
+protected_IDs = list(range(len(protected)))
 
 identifier = 300
 eof = 400
 codes = [identifier, eof]
 
-ALL = primitives + codes
+ALL = primitives + codes + protected_IDs
