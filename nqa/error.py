@@ -16,3 +16,6 @@ def ArgumentError(line, message):
 
 def FileError(line, message):
     return Error(line, message, "File")
+
+def ZoneError(line, message):
+    return Error(line, message, "Zone")

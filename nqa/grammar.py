@@ -13,11 +13,12 @@ two_char_symbols = ["//", "==", "<=", ">="]
 
 FLOAT = "float"
 INT = "int"
+COMPLEX = "complex"
 STRING = "string"
 NULL = "none"
 
-USE = "use"
-INCLUDE, FROM, AS, PASS = "import", "from", "as", "pass"
+USE, INSTALL, WAIT = "use", "install", "wait"
+INCLUDE, FROM, AS, PASS, IN = "import", "from", "as", "pass", "in"
 IF, ELIF, ELSE = "if", "elif", "else"
 WHILE, FOR, BREAK, CONTINUE = "while", "for", "break", "continue"
 OPERATOR, RETURN = "def", "return"
@@ -25,14 +26,14 @@ CLASS, SELF = "class", "self"
 AND, OR, NOT, TRUE, FALSE = "and", "or", "not", "True", "False"
 
 preprocess = [USE]
-process = [INCLUDE, FROM, AS, PASS]
+process = [INCLUDE, FROM, AS, PASS, IN]
 conditionals = [IF, ELIF, ELSE]
 loops = [WHILE, FOR, BREAK, CONTINUE]
 functions = [OPERATOR, RETURN]
 classes = [CLASS, SELF]
 bools = [AND, OR, NOT, TRUE, FALSE]
 
-primitives = [FLOAT, INT, STRING, NULL]
+primitives = [FLOAT, INT, COMPLEX, STRING, NULL]
 std_funcs = preprocess + conditionals + loops + functions + classes + bools
 operators = tolist(one_char_symbols) + two_char_symbols
 

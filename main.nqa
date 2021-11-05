@@ -2,10 +2,8 @@
 
 ~ comentarios900ewe
 ~ 
-j = "23"
-i = "piña"
-cpp[int func(int a, int b){return a + b;}
-cout << func(2.53, 3);
-]
-ewe = 0.9
-_uwu = "xd"
+use "xd"
+uwu = "9"
+if uwu == 3:{
+    print("uwu")
+}

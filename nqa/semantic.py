@@ -19,8 +19,11 @@ def generator(tree, tokens, errors):
     return errors
 
 """
+py -m cpp_compiler.py
+
 cd nqa
-./py_Compiler
+./py_compiler
 cd ..
+
 nqa/dist/nqa build main.nqa -v
 """

@@ -4,6 +4,18 @@ from nqa.error import *
 
 T, F, e = True, False, ""
 
+def get_token_ID(lexema):
+    for token in gr.protected_tokens:
+        if lexema == token[0]:
+            return token[1]
+    return gr.identifier
+
+def get_token_Symbol(lexema):
+    for token in gr.protected_tokens:
+        if lexema == token[1]:
+            return token[0]
+    return str(gr.identifier)
+
 class Token(list):
     def __init__(self, lexema, ID, line, position):
         self.append(lexema)
@@ -31,14 +43,20 @@ class Token(list):
         if self.ID in expected_types:
             return True
         else:
-            SyntaxError(next.line, f"{tostring(expected_types)} expected")
+            types = ""
+            for i in range(len(expected_types)):
+                if i > 0:
+                    types += " or "
+                types += tostring(expected_types[i])
+            
+            SyntaxError(f"{self.line}, column {self.position}", f"{types} expected")
             return False
     
     def is_protected(self):
         return (self.symbol in gr.protected) and (self.ID in gr.protected_indexes)
 
     def equal(self, symbol):
-        return self.ID == get_token_ID(symbol)
+        return (self.symbol == symbol) and (self.ID == get_token_ID(symbol))
 
 class Tokens(list):
     def __init__(self):
@@ -57,15 +75,15 @@ class Tokens(list):
 
     @property
     def last_line(self):
-        assert self._last_line
-        return self._last_line
+        assert self._last_line[0]
+        return self._last_line[:]
     
-    def set_last_line(self, line):
-        self._last_line = line
+    def set_last_line(self, line, pos):
+        self._last_line = [line, pos]
 
 class TokenType:
-    def EOF(self, line, i):
-        return Token("@EOF@", gr.eof, line, i)
+    def EOF(self, line, pos):
+        return Token("@EOF@", gr.eof, line, pos)
 
 def scanner(text, command = None):
     verbose = command in ["-v"]
@@ -75,7 +93,7 @@ def scanner(text, command = None):
     lexema = e
     line = 1
     errors = 0
-    pos = 0
+    pos = 1
 
     i = 0
     while i < len(text):
@@ -83,7 +101,7 @@ def scanner(text, command = None):
 
         if ch == "\n":
             line += 1
-            pos = 0
+            pos = 1
 
         elif commentary and ch not in gr.commentaries:
             pass
@@ -156,28 +174,15 @@ def scanner(text, command = None):
 
     if errors > 0:
         print("Traceback:", tokens)
-    elif verbose:
-        print(tokens)
 
-    tokens.set_last_line(line)
-    
+    tokens.set_last_line(line, pos)
+    log = ""
+
     if verbose:
-        print(f"Last line: {line} Last char position: {i}")
-        print(f"Tokens detected: {len(tokens)}")
+        log += f"Last line: {line} Last column: {pos}\n"
+        log += f"Tokens detected: {len(tokens)}\n"
         names = tokens.get_names()
         string_of_names = tostring(names, ", ")
-        print(f"Names defined ({len(names)}): {string_of_names}")
+        log += f"Names detected ({len(names)}): {string_of_names}\n"
 
-    return tokens, errors
-
-def get_token_ID(lexema):
-    for token in gr.protected_tokens:
-        if lexema == token[0]:
-            return token[1]
-    return gr.identifier
-
-def get_token_Symbol(lexema):
-    for token in gr.protected_tokens:
-        if lexema == token[1]:
-            return token[0]
-    return str(gr.identifier)
+    return tokens, errors, log
