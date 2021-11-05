@@ -22,14 +22,21 @@ class Zone():
         self.statements = []
 
     def display(self, depth = 0):
-        print(depth * "\t" + f"{self.name} ({self.type})")
+        
+        if self.name == "root":
+            arrow = ""
+        else:
+            arrow = "↳  "
+        
+        print(depth * "    " + arrow + f"{self.name} ({self.type})")
+
         for d in self.declaration:
             if type(d) == Zone:
                 d.display(depth + 1)
             else:
-                print((depth + 1) * "\t" + f"{d}")
+                print((depth + 1) * "    " + "↳  " + f"{d.symbol} ({d.ID})")
         for s in self.statements:
             if type(s) == Zone:
                 s.display(depth + 1)
             else:
-                print((depth + 1) * "\t" + f"{s}")
+                print((depth + 1) * "    " + "↳  " + f"{s.symbol} ({s.ID})")

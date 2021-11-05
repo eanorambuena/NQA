@@ -7,3 +7,4 @@ uwu = "9"
 if uwu == 3:{
     print("uwu")
 }
+xd = "xd"
