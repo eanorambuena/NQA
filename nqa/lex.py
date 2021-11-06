@@ -17,14 +17,23 @@ def get_token_Symbol(lexema):
     return str(gr.identifier)
 
 class Token(list):
-    def __init__(self, lexema, ID, line, position):
+    def __init__(self, lexema, ID, line, position, relative_line = -1):
         self.append(lexema)
         self.append(ID)
         self.append(line)
         self.append(position)
+
+        if relative_line == -1:
+            self.append(line)
+        else:
+            self.append(relative_line)
     
     @property
     def symbol(self):
+        return self[0]
+
+    @property
+    def name(self):
         return self[0]
     
     @property
@@ -38,6 +47,10 @@ class Token(list):
     @property
     def position(self):
         return self[3]
+
+    @property
+    def relative_line(self):
+        return self[4]
 
     def is_expected(self, expected_types):
         if self.ID in expected_types:
@@ -62,8 +75,10 @@ class Tokens(list):
     def __init__(self):
         super().__init__()
     
-    def add(self, token, id, line, position):
-        self.append(Token(token, id, line, position))
+    def add(self, token, id, line, position, relative_line = -1):
+        if relative_line == -1:
+            relative_line = line
+        self.append(Token(token, id, line, position, relative_line))
     
     def get_names(self):
         names = []
@@ -99,10 +114,13 @@ def scanner(text, command = None):
     while i < len(text):
         ch = text[i]
 
+        tokens_num = len(tokens)
+        if tokens_num > 0:
+            last_line = tokens[tokens_num - 1][4]
+
         if ch == "\n":
             line += 1
             pos = 1
-
         elif commentary and ch not in gr.commentaries:
             pass
         elif commentary and ch in gr.commentaries:
@@ -126,9 +144,9 @@ def scanner(text, command = None):
                 float = T
         elif number and ch not in (gr.digits + gr.floating):
             if float:
-                tokens.add(lexema + "0", gr.FLOAT, line, pos)
+                tokens.add(lexema + "0", gr.FLOAT, line, pos, last_line)
             else:
-                tokens.add(lexema, gr.INT, line, pos)
+                tokens.add(lexema, gr.INT, line, pos, last_line)
             lexema = ""
             number, float = F, F
             i -= 1
@@ -148,9 +166,9 @@ def scanner(text, command = None):
             id = get_token_ID(lexema)
             if id == gr.identifier:
                 for lex in lexema:
-                    tokens.add(lex, get_token_ID(lex), line, pos)
+                    tokens.add(lex, get_token_ID(lex), line, pos, last_line)
             else:
-                tokens.add(lexema, id, line, pos)
+                tokens.add(lexema, id, line, pos, last_line)
             lexema = ""
             i -= 1
             pos -= 1

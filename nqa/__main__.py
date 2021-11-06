@@ -28,7 +28,10 @@ if len(params) >= 2:
 
             tokens, errors, lex_log = scanner(module, arg)
             tree, tokens, errors = parser(tokens, errors)
-            errors = generator(tree, tokens, errors)
+            errors = generator(tree, file.rstrip(".epy"), errors)
+
+            now = time.time()
+            compilation_time = now - start_compilation
 
             log = lex_log
 
@@ -41,12 +44,14 @@ if len(params) >= 2:
             
             print(log, end = "")
 
+            print(tokens)
+            tree.display()
+
             now = time.time()
             runtime = now - start
-            compilation_time = now - start_compilation
-
+            
             print(f"Runtime: {1000 * runtime} miliseconds")
-            print(f"Compilation time: {1000 * compilation_time} miliseconds")
+            print(f"Compilation time: {1000 * compilation_time} miliseconds\n")
             
         else:
             FileError(None, "no file specified")

@@ -19,3 +19,6 @@ def FileError(line, message):
 
 def ZoneError(line, message):
     return Error(line, message, "Zone")
+
+def SemanticError(line, message):
+    return Error(line, message, "Semantic")

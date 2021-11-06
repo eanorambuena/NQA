@@ -47,32 +47,36 @@ def parser(tokens, errors):
         
         assert len(token) > 3
 
-        if function_declaration and token.ID == gr.identifier:
+        if function_declaration:
             declaration = True
+            statements = False
             zone = Zone(token.symbol, token.line, type = "function", parent = zone)
             function_declaration = False
-        elif class_declaration and token.ID == gr.identifier:
+        elif class_declaration:
             declaration = True
+            statements = False
             zone = Zone(token.symbol, token.line, type = "class", parent = zone)
             class_declaration = False
         
         if token.symbol in [gr.IF, gr.WHILE, gr.FOR]:
             zone = Zone(token.symbol, token.line, parent = zone)
             declaration = True
-        elif token.equal(gr.OPERATOR):
+            statements = False
+        elif token.symbol == gr.OPERATOR:
             function_declaration = True
-        elif token.equal(gr.CLASS):
+        elif token.symbol == gr.CLASS:
             class_declaration = True
-        elif token.equal(":"):
-            if declaration:
+        
+        elif declaration:
+            if token.symbol != zone.name:
+                zone.declaration.append(token) # It includes ":"
+            if token.symbol == ":":
                 declaration = False
                 statements = True
-        elif declaration:
-            zone.declaration.append(token)
         elif statements:
-            if token.equal("{"):
+            if token.symbol == "{":
                 pass
-            elif token.equal("}"):
+            elif token.symbol == "}":
                 closed_zone = zone
                 zone = zone.parent
                 zone.statements.append(closed_zone)
@@ -82,7 +86,5 @@ def parser(tokens, errors):
         
         i += 1
     
-    tree.display()
-
     return tree, tokens, errors
         
