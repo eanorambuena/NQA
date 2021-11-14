@@ -16,7 +16,12 @@ def parser(tokens, errors):
     tokens.append(eof_token)
 
     #Initialize the tree
-    tree = Zone("root", 0)
+    tree = Zone("root", 0, "function")
+    tk = [lex.Token('(', 30, -1, 2, 1), lex.Token(')', 31, -1, 3, 1), lex.Token(':', ':', -1, 1, 1)]
+    
+    for t in tk:
+        tree.declaration.append(t)
+    
     zone = tree
     declaration, statements = False, True
 
@@ -79,8 +84,7 @@ def parser(tokens, errors):
             elif token.symbol == "}":
                 closed_zone = zone
                 zone = zone.parent
-                zone.statements.append(closed_zone)
-                print(closed_zone.name, "added to", zone.name)
+                zone.statements.append(closed_zone) # closed_zone.name added to zone.name
             else:
                 zone.statements.append(token)
         

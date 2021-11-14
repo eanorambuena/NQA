@@ -37,6 +37,9 @@ class Zone():
                 d.display(depth + 1)
             else:
                 print((depth + 1) * "    " + "↳  " + f"{d.symbol} ({d.ID})", file = file)
+
+        print((depth + 1) * "    " + "↳  " + 10 * "-", file = file)
+
         for s in self.statements:
             if type(s) == Zone:
                 s.display(depth + 1)

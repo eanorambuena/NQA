@@ -1,4 +1,5 @@
 import nqa.grammar as gr
+import nqa.template as tp
 from nqa.utils import tostring
 from nqa.error import *
 

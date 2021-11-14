@@ -8,7 +8,7 @@ blanks = "/t /n"
 strings = "\"\'"
 commentaries = "~"
 floating = "."
-one_char_symbols = "+-*/%=<>()[]{}#$@,"
+one_char_symbols = "+-*/%=<>()[]{}#$@,."
 two_char_symbols = ["//", "==", "<=", ">="]
 
 FLOAT = "float"

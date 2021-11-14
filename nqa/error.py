@@ -22,3 +22,9 @@ def ZoneError(line, message):
 
 def SemanticError(line, message):
     return Error(line, message, "Semantic")
+
+def DeclarationError(line, message):
+    return Error(line, message, "Declaration")
+
+def RuntimeError(line, message):
+    return Error(line, message, "Runtime")
