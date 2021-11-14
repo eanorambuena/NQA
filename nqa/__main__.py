@@ -86,6 +86,7 @@ if len(params) >= 2:
                 f = open("nqa/nqa_vars", "w")
                 print(miliseconds, file=f)
                 f.close()
+            
             elif command == "build":
                 file = build(file, arg)
             
@@ -107,6 +108,23 @@ if len(params) >= 2:
                     subprocess.call(["py", "-m", "PyInstaller", "--onefile", "--name", f'{arg}', f'{file}.py'])
                 else:
                     ArgumentError(None, "no executable file name specified")
+
+            elif command == "run-init-loop":
+                if len(params) >= 4:
+                    if len(params) == 4:
+                        arg2 = None
+                    elif len(params) >= 5:
+                        arg2 = sys.argv[4]
+
+                    file = build(file, arg2)
+                    file2 = build(arg, arg2, driver = "import " + file + "\nwhile True:\n\timport {}")
+
+                    try:
+                        subprocess.call(["py", "-m", "nqa_driver"])
+                    except:
+                        subprocess.call(["py", "-m", "nqa_driver.py"])
+                else:
+                    ArgumentError(None, "no loop file specified")
 
         except:
             RuntimeError("Error in compilation")

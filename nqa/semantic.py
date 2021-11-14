@@ -109,14 +109,4 @@ except ImportError:
     file.close()
     return errors
 
-"""
-py -m cpp_compiler.py
 
-cd nqa
-./py_compiler
-cd ..
-
-nqa/dist/nqa build main.npy -v
-
-py -m nqa build main.npy -v
-"""

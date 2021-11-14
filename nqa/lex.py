@@ -98,8 +98,10 @@ class Tokens(list):
         self._last_line = [line, pos]
 
 class TokenType:
-    def EOF(self, line, pos):
+    def EOF(self, line, pos): # End Of File
         return Token("@EOF@", gr.eof, line, pos)
+    def EOZ(self, line, pos): # End Of Zone
+        return Token("@EOZ@", gr.eof, line, pos)
 
 # Main code
 
@@ -154,6 +156,7 @@ def scanner(text, command = None):
             number, float = F, F
             i -= 1
             pos -= 1
+        
         elif name and ch in gr.alphanum:
             lexema += ch
         elif name and ch not in gr.alphanum:
@@ -162,6 +165,7 @@ def scanner(text, command = None):
             lexema = ""
             i -= 1
             pos -= 1
+        
         elif operator and ch in gr.operators:
             lexema += ch
         elif operator and ch not in gr.operators:
@@ -175,6 +179,7 @@ def scanner(text, command = None):
             lexema = ""
             i -= 1
             pos -= 1
+            
         elif not commentary and ch in gr.commentaries:
             commentary = True
         elif not string and ch in gr.strings:

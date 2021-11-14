@@ -82,13 +82,15 @@ def parser(tokens, errors):
         elif declaration:
             if token.symbol != zone.name:
                 zone.declaration.append(token) # It includes ":"
-            if token.symbol == ":":
+            if token.symbol == "{":
                 declaration = False
                 statements = True
+                token[0] = ":" # set symbol to ":"
+                token[1] = ":" # set ID to ":"
         elif statements:
-            if token.symbol == "{":
-                pass
-            elif token.symbol == "}":
+            if token.symbol == "}":
+                eoz_token = lex.TokenType().EOZ(last_line[0], last_line[1])
+                zone.statements.append(eoz_token)
                 closed_zone = zone
                 zone = zone.parent
                 zone.statements.append(closed_zone) # closed_zone.name added to zone.name

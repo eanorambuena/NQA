@@ -5,7 +5,7 @@ alphabet = mayusc + mayusc.lower() + "_"
 digits = "0123456789"
 alphanum = alphabet + digits
 blanks = "/t /n"
-strings = "\"\'"
+strings = ["'", '"', '"""', "'''"]
 commentaries = "~"
 floating = "."
 one_char_symbols = "+-*/%=<>()[]{}#$@,."
