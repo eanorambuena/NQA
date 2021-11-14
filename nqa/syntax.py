@@ -2,6 +2,9 @@ import nqa.grammar as gr
 import nqa.lex as lex
 from nqa.error import *
 from nqa.zones import Zone
+from nqa.utils import install
+
+# Main code
 
 def parser(tokens, errors):
     n = len(tokens)
@@ -10,6 +13,7 @@ def parser(tokens, errors):
     errors = 0
     function_declaration = False
     class_declaration = False
+    installing = False
 
     last_line = tokens.last_line
     eof_token = lex.TokenType().EOF(last_line[0], last_line[1])
@@ -17,7 +21,7 @@ def parser(tokens, errors):
 
     #Initialize the tree
     tree = Zone("root", 0, "function")
-    tk = [lex.Token('(', 30, -1, 2, 1), lex.Token(')', 31, -1, 3, 1), lex.Token(':', ':', -1, 1, 1)]
+    tk = [lex.Token('(', lex.get_token_ID('('), -1, 2, 1), lex.Token(')', lex.get_token_ID(')'), -1, 3, 1), lex.Token(':', ':', -1, 1, 1)]
     
     for t in tk:
         tree.declaration.append(t)
@@ -41,14 +45,6 @@ def parser(tokens, errors):
                 break
         else:
             expected_types = gr.ALL
-
-        # Set expected_types
-        if token.equal(gr.USE) or token.equal(gr.INSTALL):
-            expected_types = [gr.STRING]
-            expecting = True
-        elif token.equal(gr.WAIT):
-            expected_types = [gr.INT, gr.FLOAT]
-            expecting = True
         
         assert len(token) > 3
 
@@ -63,7 +59,18 @@ def parser(tokens, errors):
             zone = Zone(token.symbol, token.line, type = "class", parent = zone)
             class_declaration = False
         
-        if token.symbol in [gr.IF, gr.WHILE, gr.FOR]:
+        if installing:
+            install(token.symbol)
+            installing = False
+        elif token.equal(gr.USE) or token.equal(gr.INSTALL):
+            expected_types = [gr.STRING]
+            expecting = True
+            if token.equal(gr.INSTALL):
+                installing = True
+        elif token.equal(gr.WAIT):
+            expected_types = [gr.INT, gr.FLOAT]
+            expecting = True
+        elif token.symbol in [gr.IF, gr.WHILE, gr.FOR]:
             zone = Zone(token.symbol, token.line, parent = zone)
             declaration = True
             statements = False

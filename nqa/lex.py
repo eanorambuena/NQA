@@ -1,5 +1,5 @@
 import nqa.grammar as gr
-import nqa.template as tp
+import nqa.templates as tp
 from nqa.utils import tostring
 from nqa.error import *
 
@@ -100,6 +100,8 @@ class Tokens(list):
 class TokenType:
     def EOF(self, line, pos):
         return Token("@EOF@", gr.eof, line, pos)
+
+# Main code
 
 def scanner(text, command = None):
     verbose = command in ["-v"]

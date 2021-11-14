@@ -5,15 +5,15 @@ except ImportError:
 
 def root():
 	uwu=9
-	def hola():
-		print('hola')#
+	def hola(a):
+		print(a,'hola')#
 	
 	if uwu==6+3:
 		print('uwu')
 		print('ewe')
 		print('awa')
 		for i in range(0,3):
-			hola()
+			hola(i+1)
 			minecraft='xd'#
 		
 		#

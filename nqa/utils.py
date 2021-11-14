@@ -1,3 +1,5 @@
+import subprocess
+
 def tokenize(lexemas):
     tokens = []
     for i in range(len(lexemas)):
@@ -17,3 +19,6 @@ def tostring(array, separator = ""):
         if i != len(array) - 1:
             s += separator
     return s
+
+def install(package):
+    subprocess.call(["py", "-m", "pip", "install", package])

@@ -42,8 +42,15 @@ def build(file, arg,  main = "root()", exceptions = "except:\n\tpass", driver = 
     now = time.time()
     runtime = now - start
     
-    print(f"Runtime: {1000 * runtime} miliseconds")
-    print(f"Compilation time: {1000 * compilation_time} miliseconds\n")
+    f = open("nqa/nqa_vars")
+    miliseconds = f.read().strip()
+    f.close()
+    if miliseconds == "True":
+        print(f"Runtime: {1000 * runtime} miliseconds")
+        print(f"Compilation time: {1000 * compilation_time} miliseconds\n")
+    else:
+        print(f"Runtime: {runtime} seconds")
+        print(f"Compilation time: {compilation_time} seconds\n")
     
     f = open("nqa_driver.py", "w")
     f.write(driver.format(file))
@@ -62,19 +69,34 @@ if len(params) >= 2:
 
             if len(params) == 3:
                 arg = None
-                
             elif len(params) >= 4:
                 arg = sys.argv[3]
 
-            if params[1] == "build":
+            # Switch command
+            
+            command = params[1]
+
+            if command == "set-time-unit":
+                if file == "ms":
+                    miliseconds = True
+                elif file == "s":
+                    miliseconds = False
+                else:
+                    miliseconds = True
+                f = open("nqa/nqa_vars", "w")
+                print(miliseconds, file=f)
+                f.close()
+            elif command == "build":
                 file = build(file, arg)
-            elif params[1] == "run":
+            
+            elif command == "run":
                 file = build(file, arg, driver = "import {}")
                 try:
                     subprocess.call(["py", "-m", "nqa_driver"])
                 except:
                     subprocess.call(["py", "-m", "nqa_driver.py"])
-            elif params[1] == "compile":
+            
+            elif command == "compile":
                 if len(params) >= 4:
                     if len(params) == 4:
                         arg2 = None
@@ -84,11 +106,11 @@ if len(params) >= 2:
                     file = build(file, arg2, driver = "import {}")
                     subprocess.call(["py", "-m", "PyInstaller", "--onefile", "--name", f'{arg}', f'{file}.py'])
                 else:
-                    FileError(None, "no executable file name specified")
+                    ArgumentError(None, "no executable file name specified")
+
         except:
             RuntimeError("Error in compilation")
-            
     else:
-        FileError(None, "no file specified")
+        FileError(None, "no file or argument specified")
 else:
     ArgumentError(None, "no arguments specified")
